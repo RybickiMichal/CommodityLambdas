@@ -19,7 +19,7 @@ Resources:
           Type: Api
           Properties:
             Path: /form
-            Method: get
+            Method: post
 Outputs:
   CommodityFormApi:
     Description: API Gateway endpoint URL for Prod stage for CommodityForm function

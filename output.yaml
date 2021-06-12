@@ -8,7 +8,7 @@ Resources:
   CommodityFormFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://commodity-sam/3baff0bb6bcb004c882f1ebc19af5819
+      CodeUri: s3://commodity-sam/015fdd4629f65504a75fcda256d6b04e
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Policies:
@@ -19,7 +19,7 @@ Resources:
           Type: Api
           Properties:
             Path: /form
-            Method: get
+            Method: post
 Outputs:
   CommodityFormApi:
     Description: API Gateway endpoint URL for Prod stage for CommodityForm function

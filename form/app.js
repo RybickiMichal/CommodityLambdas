@@ -1,14 +1,18 @@
 const AWS = require('aws-sdk');
-const ddb = new AWS.DynamoDB.DocumentClient({region: 'eu-central-1'});;
+const ddb = new AWS.DynamoDB.DocumentClient({region: 'eu-central-1'});
 
 exports.lambdaHandler = async (event, context, callback) => {
-    await addCommodity(event, context)
+    if (event.body.index === undefined) {
+        event.body = JSON.parse(event.body);
+    }
+    validateCommodityFields(event.body);
+    await addCommodity(event.body, context.awsRequestId)
         .then(() => {
             callback(null, {
                 statusCode: 201,
                 body: "",
                 headers: {
-                    'Access-Control-Allow-Origin' : '*'
+                    'Access-Control-Allow-Origin': '*'
                 }
             })
         }).catch(err => {
@@ -16,15 +20,26 @@ exports.lambdaHandler = async (event, context, callback) => {
         })
 };
 
-function addCommodity(event, context) {
+function validateCommodityFields(body) {
+    console.log(body)
+    if (isNull(body.index) || isNull(body.scrapingStrategy) || isNull(body.commodityType)) {
+        throw new Error('Required field is empty! ' + body);
+    }
+}
+
+function isNull(field) {
+    return field == null;
+}
+
+function addCommodity(body, requestId) {
     const params = {
         TableName: 'Commodity',
         Item: {
-            'commodityId' : context.awsRequestId,
-            'index' : event.index,
-            'scrapingStrategy' : event.scrapingStrategy,
-            'dataSource' : event.dataSource,
-            'commodityType' : event.commodityType
+            'commodityId': requestId,
+            'index': body.index,
+            'scrapingStrategy': body.scrapingStrategy,
+            'dataSource': body.dataSource,
+            'commodityType': body.commodityType
         }
     }
     return ddb.put(params).promise();
