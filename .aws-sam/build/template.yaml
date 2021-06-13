@@ -1,14 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: CommodityForm
+Description: Commodity
 Globals:
   Function:
     Timeout: 3
 Resources:
-  CommodityFormFunction:
+  CommodityFunctions:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: CommodityFormFunction
+      CodeUri: CommodityFunctions
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Policies:
@@ -18,22 +18,37 @@ Resources:
         form:
           Type: Api
           Properties:
-            Path: /form
+            Path: /commodity
             Method: post
+  CommodityProviderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CommodityProviderFunction
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName: Commodity
+      Events:
+        form:
+          Type: Api
+          Properties:
+            Path: /commodity/{commodityId}
+            Method: get
 Outputs:
-  CommodityFormApi:
-    Description: API Gateway endpoint URL for Prod stage for CommodityForm function
+  CommodityApi:
+    Description: API Gateway endpoint URL for Prod stage for Commodity functions
     Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/form/
-  CommodityFormFunction:
-    Description: CommodityForm Lambda Function ARN
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/commodity
+  CommodityFunctions:
+    Description: Commodity Lambda Functions ARN
     Value:
       Fn::GetAtt:
-      - CommodityFormFunction
+      - CommodityFunctions
       - Arn
-  CommodityFormFunctionIamRole:
-    Description: Implicit IAM Role created for CommodityForm function
+  CommodityFunctionsIamRole:
+    Description: Implicit IAM Role created for Commodity functions
     Value:
       Fn::GetAtt:
-      - CommodityFormFunctionRole
+      - CommodityFunctionsRole
       - Arn
