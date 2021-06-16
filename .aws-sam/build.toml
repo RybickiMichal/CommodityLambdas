@@ -6,7 +6,7 @@ codeuri = "C:\\Users\\MRy\\Desktop\\Repository\\CommodityLambdas\\commodityProvi
 runtime = "nodejs12.x"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["CommodityProviderFunction"]
+functions = ["CommodityProviderByIdFunction"]
 
 [function_build_definitions.6f2fb740-2864-4b42-807d-1aac936c8d0a]
 codeuri = "C:\\Users\\MRy\\Desktop\\Repository\\CommodityLambdas\\addCommodity"
@@ -14,5 +14,12 @@ runtime = "nodejs12.x"
 source_md5 = ""
 packagetype = "Zip"
 functions = ["CommodityFunctions"]
+
+[function_build_definitions.85265408-2a9f-4567-905f-05d5f7f77077]
+codeuri = "C:\\Users\\MRy\\Desktop\\Repository\\CommodityLambdas\\commoditiesProviderByCommodityType"
+runtime = "nodejs12.x"
+source_md5 = ""
+packagetype = "Zip"
+functions = ["CommoditiesProviderByCommodityTypeFunction"]
 
 [layer_build_definitions]

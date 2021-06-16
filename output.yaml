@@ -20,10 +20,10 @@ Resources:
           Properties:
             Path: /commodity
             Method: post
-  CommodityProviderFunction:
+  CommodityProviderByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://commodity-sam/456b39d6a03ff8b22f537867671be702
+      CodeUri: s3://commodity-sam/1725e7de1f2c94fc9576d75540b8d607
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Policies:
@@ -34,6 +34,21 @@ Resources:
           Type: Api
           Properties:
             Path: /commodity/{commodityId}
+            Method: get
+  CommoditiesProviderByCommodityTypeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://commodity-sam/d59ce1d6c379cd0c1aa3b0a3b46b7bf6
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName: Commodity
+      Events:
+        form:
+          Type: Api
+          Properties:
+            Path: /commodities/{commodityType}
             Method: get
 Outputs:
   CommodityApi:

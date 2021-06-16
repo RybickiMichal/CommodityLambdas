@@ -21,7 +21,7 @@ Resources:
           Properties:
             Path: /commodity
             Method: post
-  CommodityProviderFunction:
+  CommodityProviderByIdFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: commodityProviderById/
@@ -35,6 +35,21 @@ Resources:
           Type: Api
           Properties:
             Path: /commodity/{commodityId}
+            Method: get
+  CommoditiesProviderByCommodityTypeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: commoditiesProviderByCommodityType/
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: Commodity
+      Events:
+        form:
+          Type: Api
+          Properties:
+            Path: /commodities/{commodityType}
             Method: get
 
 Outputs:
