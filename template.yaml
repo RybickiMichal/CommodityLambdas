@@ -4,6 +4,10 @@ Description: "Commodity"
 Globals:
   Function:
     Timeout: 3
+  Api:
+    Cors:
+      AllowOrigin: "'*'"
+      AllowHeaders: "'*'"
 
 Resources:
   CommodityFunctions:

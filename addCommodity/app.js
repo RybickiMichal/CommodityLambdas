@@ -12,7 +12,9 @@ exports.lambdaHandler = async (event, context, callback) => {
                 statusCode: 201,
                 body: "",
                 headers: {
-                    'Access-Control-Allow-Origin': '*'
+                    "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "POST"
                 }
             })
         }).catch(err => {
@@ -40,7 +42,7 @@ function addCommodity(body, requestId) {
             'scrapingStrategy': body.scrapingStrategy.toUpperCase(),
             'dataSource': body.dataSource,
             'commodityType': body.commodityType.toUpperCase(),
-            'commoditySector': body.commoditySector.toUpperCase()
+            'commoditySector': body.commoditySector === undefined ? body.commoditySector : body.commoditySector.toUpperCase()
         }
     }
     return ddb.put(params).promise();
