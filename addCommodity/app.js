@@ -36,10 +36,11 @@ function addCommodity(body, requestId) {
         TableName: 'Commodity',
         Item: {
             'commodityId': requestId,
-            'index': body.index,
-            'scrapingStrategy': body.scrapingStrategy,
+            'index': body.index.toUpperCase(),
+            'scrapingStrategy': body.scrapingStrategy.toUpperCase(),
             'dataSource': body.dataSource,
-            'commodityType': body.commodityType
+            'commodityType': body.commodityType.toUpperCase(),
+            'commoditySector': body.commoditySector.toUpperCase()
         }
     }
     return ddb.put(params).promise();
