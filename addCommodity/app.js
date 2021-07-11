@@ -42,7 +42,9 @@ function addCommodity(body, requestId) {
             'scrapingStrategy': body.scrapingStrategy.toUpperCase(),
             'dataSource': body.dataSource,
             'commodityType': body.commodityType.toUpperCase(),
-            'commoditySector': body.commoditySector === undefined ? body.commoditySector : body.commoditySector.toUpperCase()
+            'commoditySector': body.commoditySector === undefined ? body.commoditySector : body.commoditySector.toUpperCase(),
+            'rawMaterial': body.rawMaterial === undefined ? body.rawMaterial : body.rawMaterial.toUpperCase(),
+            'comment': body.comment
         }
     }
     return ddb.put(params).promise();

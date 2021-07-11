@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: "Commodity"
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 10
   Api:
     Cors:
       AllowOrigin: "'*'"

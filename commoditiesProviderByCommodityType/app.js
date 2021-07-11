@@ -4,7 +4,7 @@ const ddb = new AWS.DynamoDB.DocumentClient({region: 'eu-central-1'});
 exports.lambdaHandler = async (event, context, callback) => {
     try {
         const ids = await readCommoditiesIdsByType(event.pathParameters.commodityType);
-        console.log("Data from GSI: " + JSON.stringify(ids));
+        console.log("Data from GSI for commodity type: " + JSON.stringify(ids));
 
         const commodities = await readCommodities(ids);
         console.log("commodities by type" + event.pathParameters.commodityType + commodities);
@@ -13,7 +13,9 @@ exports.lambdaHandler = async (event, context, callback) => {
             statusCode: 200,
             body: JSON.stringify(commodities),
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET"
             },
         });
     } catch (err) {
